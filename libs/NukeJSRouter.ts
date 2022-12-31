@@ -23,7 +23,7 @@ export default class NukeJSRouter implements NukeJSRouterInterface {
 
                 if (item.url === window.location.pathname) {
                     notFound = false;
-                    console.log("check", item.url);
+                    //console.log("check", item.url);
                     item.page.then(async (page) => {
                         let _window: any = window;
                         if (_window.nukepage) {

@@ -1,6 +1,6 @@
 {
   "name": "nukejs-router",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Nukejs Router",
   "main": "dist/libs/NukeJSRouter.js",
   "scripts": {
