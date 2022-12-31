@@ -1,0 +1,27 @@
+{
+  "name": "nukejs-router",
+  "version": "1.0.16",
+  "description": "Nukejs Router",
+  "main": "dist/libs/NukeJSRouter.js",
+  "scripts": {
+    "postinstall": "npx tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steveleetn91/nukejs-router.git"
+  },
+  "keywords": [
+    "nukejs"
+  ],
+  "author": "stevelee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/steveleetn91/nukejs-router/issues"
+  },
+  "homepage": "https://github.com/steveleetn91/nukejs-router#readme",
+  "dependencies": {
+    "@types/node": "^18.11.18",
+    "typescript": "^4.9.4"
+  }
+}
