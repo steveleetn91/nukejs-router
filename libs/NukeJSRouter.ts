@@ -54,44 +54,40 @@ export default class NukeJSRouter implements NukeJSRouterInterface {
                 const params = item.url.split('/');
                 const pathname = window.location.pathname.split('/');
                 if (params.length === pathname.length && item.url.includes('$')) {
-                    try {
-                        let checkRouter = 0;
-                        pathname.forEach((pathn, index) => {
-                            if (params[index] === pathn) {
-                                checkRouter += 1;
+                    let checkRouter = 0;
+                    pathname.forEach((pathn, index) => {
+                        if (params[index] === pathn) {
+                            checkRouter += 1;
+                        }
+                        if (params[index].includes('$')) {
+                            const param = params[index].toString().replace('$', '');
+                            this._route.params[param] = pathn;
+                            checkRouter += 1;
+                        }
+                    });
+                    if (checkRouter === params.length) {
+                        notFound = false;
+                        item.page.then(async (page) => {
+                            await this.makeQuery();
+                            let _window: any = window;
+                            if (_window.nukepage) {
+                                delete _window.nukepage;
                             }
-                            if (params[index].includes('$')) {
-                                const param = params[index].toString().replace('$', '');
-                                this._route.params[param] = pathn;
-                                checkRouter += 1;
+                            if (_window.route) {
+                                delete _window.route;
+                            }
+                            _window.route = this._route;
+
+                            _window.nukepage = new page.default();
+                            await _window.nukepage.beforeRender();
+                            await _window.nukepage.render();
+                            await _window.nukepage.afterRender();
+                            try {
+                                window = _window;
+                            } catch (e) {
+                                //ignore warning 
                             }
                         });
-                        if (checkRouter === params.length) {
-                            console.log("OK");
-                            item.page.then(async (page) => {
-                                await this.makeQuery();
-                                let _window: any = window;
-                                if (_window.nukepage) {
-                                    delete _window.nukepage;
-                                }
-                                if (_window.route) {
-                                    delete _window.route;
-                                }
-                                _window.route = this._route;
-
-                                _window.nukepage = new page.default();
-                                await _window.nukepage.beforeRender();
-                                await _window.nukepage.render();
-                                await _window.nukepage.afterRender();
-                                try {
-                                    window = _window;
-                                } catch (e) {
-                                    //ignore warning 
-                                }
-                            });
-                        }
-                    } catch (e: any) {
-                        console.log(e.toString())
                     }
                 }
                 if (index === (this.listRouter.length - 1) && notFound === true) {
